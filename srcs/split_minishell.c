@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_line_cut.c                                   :+:      :+:    :+:   */
+/*   split_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 16:36:29 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/11 17:21:18 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/11 17:40:35 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static char	**ft_return_tab(char *s, char **tab, int ligne, char c)
 	return (tab);
 }
 
-char		**ft_split_line_cut(char const *s, char c)
+char		**split_minishell(char const *s, char c)
 {
 	char	**tab;
 	int		i;

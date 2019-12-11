@@ -6,14 +6,14 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 16:13:34 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/11 16:22:59 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/11 17:37:42 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void	free_line_cut(char **line_cut)
+int 	free_line_cut(char **line_cut)
 {
 	int		i;
 
@@ -25,6 +25,7 @@ void	free_line_cut(char **line_cut)
 	}
 	free(line_cut);
 	line_cut = NULL;
+    return (0);
 }
 
 int 	return_free_line(char **line, int i, int full, char *error)

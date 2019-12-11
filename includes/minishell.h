@@ -6,7 +6,7 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:31:28 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/11 16:39:37 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/11 17:59:35 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct	s_processus
 
 typedef struct	s_group
 {
-	int				value;
+	int				value; // && = 0 ; || == 1
 	t_processus		*prc;
 	unsigned int	prc_len;
 	t_bool			ret;
@@ -75,9 +75,9 @@ typedef struct  s_line
 
 int				parsing(char *line, t_minishell *mn);
 
-char			**ft_split_line_cut(char const *s, char c);
+char			**split_minishell(char const *s, char c);
 
-void			free_line_cut(char **line_cut);
+int				free_line_cut(char **line_cut);
 int 			free_all(t_line *l, t_minishell *mn);
 int 			return_free_line(char **line, int i, int full, char *error);
 void    		free_minishell(t_minishell *mn);
