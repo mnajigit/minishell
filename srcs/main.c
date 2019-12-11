@@ -6,7 +6,7 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:41:16 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/11 18:14:43 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/11 18:40:30 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int		main(void)
 		mn.i_l = 0;
 		while (mn.line_cut[mn.i_l])
 		{
+			if (!(parsing(&mn)))
+			 	return (return_free_line(l.line, l.i, l.full, "parsing failed !\n"));
 			print_minishell(mn);										/////////////////////////////////////
 			mn.i_l++;
 		}
-		// if (!(parsing(l.line[l.i], &mn)))
-		// 	return (return_free_line(l.line, l.i - 1, l.full, "parsing failed !\n"));
 		if (ft_strcmp(l.line[l.i], "exit") == 0)
 			return (free_all(&l, &mn));
 		else if (ft_strcmp(l.line[l.i], "printline -a") == 0)           /////////////////////////////////////

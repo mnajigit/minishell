@@ -6,7 +6,7 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:31:28 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/11 17:59:35 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/11 18:40:50 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct  s_line
     t_bool			full;
 }				t_line;
 
-int				parsing(char *line, t_minishell *mn);
+int				parsing(t_minishell *mn);
 
 char			**split_minishell(char const *s, char c);
 
