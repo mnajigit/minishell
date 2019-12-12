@@ -6,7 +6,7 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:41:16 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/11 18:40:30 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/12 12:43:18 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		main(void)
 {
 	t_minishell	mn;
 	t_line		l;
+	int			ret;
 
 	mn = (t_minishell) { 0 };
 	ft_bzero(&l, sizeof(t_line));
@@ -57,22 +58,25 @@ int		main(void)
 		mn.i_l = 0;
 		while (mn.line_cut[mn.i_l])
 		{
-			if (!(parsing(&mn)))
+			if (!(ret = parse_minishell(&mn)))
 			 	return (return_free_line(l.line, l.i, l.full, "parsing failed !\n"));
+			if (ret == -1)
+				break ;
 			print_minishell(mn);										/////////////////////////////////////
+			if (ft_strcmp(mn.line_cut[mn.i_l], "exit") == 0)
+				return (free_all(&l, &mn));
+			else if (ft_strcmp(mn.line_cut[mn.i_l], "printline -a") == 0)           /////////////////////////////////////
+				print_all_line(l.line, l.i, l.full); 						/////////////////////////////////////
+			// free_minishell(&mn);
 			mn.i_l++;
 		}
-		if (ft_strcmp(l.line[l.i], "exit") == 0)
-			return (free_all(&l, &mn));
-		else if (ft_strcmp(l.line[l.i], "printline -a") == 0)           /////////////////////////////////////
-			print_all_line(l.line, l.i, l.full);                        /////////////////////////////////////
+		free_line_cut(mn.line_cut, 0);
 		if (l.i == 99)
 		{
 			l.i = -1;
 			l.full = 1;
 		}
 		l.i++;
-		free_minishell(&mn);
 	}
 	return (0);
 }
