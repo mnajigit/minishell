@@ -6,7 +6,7 @@
 #    By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/12/11 11:35:35 by mnaji             #+#    #+#              #
-#    Updated: 2019/12/12 11:54:26 by mnaji            ###   ########.fr        #
+#    Updated: 2019/12/12 17:45:12 by mnaji            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ OBJ_DIR = ./objs/
 INC_DIR = ./includes/
 LIBFT_DIR = ./libft/
 
-SRC_FILES = main.c parse_minishell.c free.c split_minishell.c group_utils.c utils.c
+SRC_FILES = main.c parse_minishell.c free.c split_minishell.c group_utils.c utils.c parse_processus.c
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))

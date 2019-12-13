@@ -6,7 +6,7 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 16:36:29 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/11 17:40:35 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/12 20:43:07 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	ft_count_word(char const *s, char c)
 		}
 		while ((s[i] != c || db_quote == 1 || sp_quote == 1) && s[i] != '\0')
 		{
-			if ((i == 0 && s[i] == '"') || (s[i] == '"' && s[i - 1] != '\\'))
+			if (((i == 0 && s[i] == '"') || (s[i] == '"' && s[i - 1] != '\\')) && sp_quote == -1)
         		db_quote *= -1;
-			else if ((i == 0 && s[i] == '\'') || (s[i] == '\''))
+			else if (s[i] == '\'' && db_quote == -1)
 				sp_quote *= -1;
 			if (s[i] == '\0')
 				return (count_word + 1);
@@ -59,9 +59,9 @@ static int	ft_size_word(char *str, char c)
     sp_quote = -1;
 	while ((str[i] != c || db_quote == 1 || sp_quote == 1) && str[i] != '\0')
 	{
-		if ((i == 0 && str[i] == '"') || (str[i] == '"' && str[i - 1] != '\\'))
+		if (((i == 0 && str[i] == '"') || (str[i] == '"' && str[i - 1] != '\\')) && sp_quote == -1)
         	db_quote *= -1;
-		else if ((i == 0 && str[i] == '\'') || (str[i] == '\''))
+		else if (str[i] == '\'' && db_quote == -1)
 			sp_quote *= -1;
 		count++;
 		i++;
@@ -80,9 +80,9 @@ static int	ft_cpy_ligne(char *tab, char *s, int i, char c)
     sp_quote = -1;
 	while ((s[i] != c || db_quote == 1 || sp_quote == 1) && s[i] != 0)
 	{
-		if ((i == 0 && s[i] == '"') || (s[i] == '"' && s[i - 1] != '\\'))
+		if (((i == 0 && s[i] == '"') || (s[i] == '"' && s[i - 1] != '\\')) && sp_quote == -1)
         	db_quote *= -1;
-		else if ((i == 0 && s[i] == '\'') || (s[i] == '\''))
+		else if (s[i] == '\'' && db_quote == -1)
 			sp_quote *= -1;
 		tab[t] = s[i];
 		i++;

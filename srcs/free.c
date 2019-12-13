@@ -6,7 +6,7 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 16:13:34 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/12 12:44:25 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/13 17:55:22 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,55 @@ int 	return_free_line(char **line, int i, int full, char *error)
 	if (error)
 		ft_putstr(error);
 	return (0);
+}
+
+int		free_programme(t_prog *prog, int ret)
+{
+	int		i;
+
+	i = -1;
+	while (prog->file_in[++i] != NULL)
+		ft_strdel(&prog->file_in[i]);
+	i = -1;
+	while (prog->file_out[++i] != NULL)
+		ft_strdel(&prog->file_out[i]);
+	i = -1;
+	while (prog->file_end[++i] != NULL)
+		ft_strdel(&prog->file_end[i]);
+	i = -1;
+	while (prog->cmd[++i])
+		ft_strdel(&prog->cmd[i]);
+	if (prog->cmd)
+		free(prog->cmd);
+	if (prog->nb_file_in > 0)
+		free(prog->file_in);
+	if (prog->nb_file_out > 0)
+		free(prog->file_out);
+	if (prog->nb_file_end > 0)
+		free(prog->file_end);
+	return (ret);
+}
+
+int		free_processus(t_processus *prc, int step, int ret)
+{
+	unsigned int	i;
+
+	ft_strdel(&prc->prc);
+	i = -1;
+	while (prc->prc_cut[++i])
+		ft_strdel(&prc->prc_cut[i]);
+	free(&prc->prc_cut);
+	prc->prc_cut = NULL;
+	i = -1;
+	if (prc->nb_prog > 0)
+		while (++i < prc->nb_prog)
+			free(&prc->prog[i]);
+	if (step > 0)
+	{
+		free(prc->prog);
+		prc->prog = NULL;
+	}
+	return (ret);
 }
 
 void    free_minishell(t_minishell *mn)
