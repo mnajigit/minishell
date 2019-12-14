@@ -6,7 +6,7 @@
 /*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:31:28 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/13 21:27:37 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/14 15:13:31 by mnaji            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ typedef enum	e_group_type
 
 typedef struct 	s_group
 {
-	char				*grp; // pour aider au parsing
-	char				*grp_left; //pour aider au parsing
-	char				*grp_right; //pour aider au parsing
+	// char				*grp; // pour aider au parsing
+	// char				*grp_left; //pour aider au parsing
+	// char				*grp_right; //pour aider au parsing
 	t_group_type		type; // && = 0 ; || = 1 ; () == 2 ; proc = 3
 	struct s_group		*left;
 	struct s_group		*right;
@@ -89,7 +89,6 @@ typedef struct  s_minishell
 	char				**line_cut;
 	unsigned int		i_l;
 	t_group				*grp;
-	unsigned int		grp_len;
     unsigned int		*stdi;
 	unsigned int		stdi_len;
 	unsigned int		*stdo;
@@ -104,6 +103,7 @@ typedef struct  s_line
 }				t_line;
 
 int				parse_minishell(t_minishell *mn);
+int				parse_groups(char *str, t_minishell *mn);
 char			**split_minishell(char const *s, char c);
 int				parse_processus(t_processus *prc);
 

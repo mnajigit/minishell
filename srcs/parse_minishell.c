@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_minishell.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cchudant <cchudant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 15:52:17 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/13 18:36:05 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/14 06:15:44 by cchudant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ int			parse_minishell(t_minishell *mn)
 	// if ((ret = parse_group(mn->line_cut[mn->i_l], mn->grp)) != 1)
 	// 	return (!ret ? free_line_cut(mn->line_cut, ret) : ret);
 	// PARSE PROCESSUS !!
-	mn->grp = (t_group*)ft_memalloc(sizeof(t_group) * 2);
-	mn->grp[0].proc = ft_memalloc(sizeof(t_processus) * 2);
-	mn->grp[0].proc->prc = ft_strdup(mn->line_cut[mn->i_l]);
-	parse_processus(mn->grp[0].proc);
-    return (1);
+	// mn->grp = (t_group*)ft_memalloc(sizeof(t_group) * 2);
+	// mn->grp[0].proc = ft_memalloc(sizeof(t_processus) * 2);
+	// mn->grp[0].proc->prc = ft_strdup(mn->line_cut[mn->i_l]);
+	// parse_processus(mn->grp[0].proc);
+
+    return (parse_groups(mn->line_cut[mn->i_l], mn));
 }
