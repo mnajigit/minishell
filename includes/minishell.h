@@ -6,7 +6,7 @@
 /*   By: cchudant <cchudant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:31:28 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/14 06:09:03 by cchudant         ###   ########.fr       */
+/*   Updated: 2019/12/14 08:10:37 by cchudant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include "libft.h"
 # include <stdio.h>
+# include <signal.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h> 
 
 typedef struct      s_var
 {
@@ -115,5 +119,8 @@ int 			return_free_line(char **line, int i, int full, char *error);
 void    		free_minishell(t_minishell *mn);
 int				free_processus(t_processus *prc, int step, int ret);
 int				free_programme(t_prog *prog, int ret);
+
+void			exec_cmd(t_minishell *mn, t_prog *cmd);
+void			init_signals();
 
 #endif

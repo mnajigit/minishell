@@ -6,7 +6,7 @@
 /*   By: cchudant <cchudant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:41:16 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/14 06:48:08 by cchudant         ###   ########.fr       */
+/*   Updated: 2019/12/14 15:35:04 by cchudant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	print_all_line(char **line, int i, t_bool full) ////////////////////
 	}
 }
 
-static void print_minishell_proc(t_processus *prc, int prefix)
+static void print_minishell_proc(t_minishell *mn, t_processus *prc, int prefix)
 {
 	for (int i = 0; i < prefix; i++) printf(">   ");
 	printf("-------prc-------\n");
@@ -47,7 +47,7 @@ static void print_minishell_proc(t_processus *prc, int prefix)
 		int l = -1;
 		while (prc->prog[k].cmd[++l])
 		{
-		for (int i = 0; i < prefix; i++) printf(">   ");
+			for (int i = 0; i < prefix; i++) printf(">   ");
 			printf("arg[%d] = %s\n", l, prc->prog[k].cmd[l]);
 		}
 		for (int i = 0; i < prefix; i++) printf(">   ");
@@ -77,23 +77,24 @@ static void print_minishell_proc(t_processus *prc, int prefix)
 				for (int i = 0; i < prefix; i++) printf(">   ");
 				printf("file_end[%d] = %s\n", l, prc->prog[k].file_end[l]);
 			}
+		//exec_cmd(mn, &prc->prog[k]);
 	}
 }
 
-static void print_minishell_grp(t_group *grp, int prefix)
+static void print_minishell_grp(t_minishell *mn, t_group *grp, int prefix)
 {
 	static char *grps[] = { "AND", "OR", "PAR", "PROC" };
 	for (int i = 0; i < prefix; i++) printf(">   ");
 	printf("!!!! GROUP TYPE : %s\n", grps[grp->type]);
 	for (int i = 0; i < prefix; i++) printf(">   ");
 	printf("!!-> left : %p\n", grp->left);
-	if (grp->left) print_minishell_grp(grp->left, prefix + 1);
+	if (grp->left) print_minishell_grp(mn, grp->left, prefix + 1);
 	for (int i = 0; i < prefix; i++) printf(">   ");
 	printf("!!-> right : %p\n", grp->right);
-	if (grp->right) print_minishell_grp(grp->right, prefix + 1);
+	if (grp->right) print_minishell_grp(mn, grp->right, prefix + 1);
 	for (int i = 0; i < prefix; i++) printf(">   ");
 	printf("!!-> proc : %p\n", grp->proc);
-	if (grp->proc) print_minishell_proc(grp->proc, prefix);
+	if (grp->proc) print_minishell_proc(mn, grp->proc, prefix);
 	for (int i = 0; i < prefix; i++) printf(">   ");
 	printf("!!!! END GROUP TYPE : %s\n\n", grps[grp->type]);
 }
@@ -103,7 +104,7 @@ static void	print_minishell(t_minishell *mn)				////////////////////////////////
 	printf("/n////////////////////////// line_cut ///////////////////////////\n");
 	printf("[%d] : %s\n", mn->i_l, mn->line_cut[mn->i_l]);
 
-	print_minishell_grp(mn->grp, 0);
+	print_minishell_grp(mn, mn->grp, 0);
 }
 
 static int	check_quote(char *line)
@@ -145,6 +146,7 @@ int		main(void)
 	t_line		l;
 	int			ret;
 
+	init_signals();
 	mn = (t_minishell) { 0 };
 	l = (t_line) { 0 };
 	l.line = (char**)ft_memalloc(sizeof(char*) * 100);
