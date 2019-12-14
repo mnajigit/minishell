@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mnaji <mnaji@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cchudant <cchudant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/11 11:41:16 by mnaji             #+#    #+#             */
-/*   Updated: 2019/12/13 18:50:42 by mnaji            ###   ########.fr       */
+/*   Updated: 2019/12/14 06:48:08 by cchudant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,56 +31,79 @@ static void	print_all_line(char **line, int i, t_bool full) ////////////////////
 	}
 }
 
+static void print_minishell_proc(t_processus *prc, int prefix)
+{
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("-------prc-------\n");
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("%s\n", prc->prc);
+	int k = -1;
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("nb_prog = %d\n\n", prc->nb_prog);
+	while (++k < (int)prc->nb_prog)
+	{
+		for (int i = 0; i < prefix; i++) printf(">   ");
+		printf("---prog[%d]---\n", k);
+		int l = -1;
+		while (prc->prog[k].cmd[++l])
+		{
+		for (int i = 0; i < prefix; i++) printf(">   ");
+			printf("arg[%d] = %s\n", l, prc->prog[k].cmd[l]);
+		}
+		for (int i = 0; i < prefix; i++) printf(">   ");
+		printf("nb file in = %d\n", prc->prog[k].nb_file_in);
+		l = -1;
+		if (prc->prog[k].nb_file_in > 0)
+			while (prc->prog[k].file_in[++l])
+			{
+				for (int i = 0; i < prefix; i++) printf(">   ");
+				printf("file_in[%d] = %s\n", l, prc->prog[k].file_in[l]);
+			}
+		l = -1;
+		for (int i = 0; i < prefix; i++) printf(">   ");
+		printf("nb file out = %d\n", prc->prog[k].nb_file_out);
+		if (prc->prog[k].nb_file_out > 0)
+			while (prc->prog[k].file_out[++l])
+			{
+				for (int i = 0; i < prefix; i++) printf(">   ");
+				printf("file_out[%d] = %s\n", l, prc->prog[k].file_out[l]);
+			}
+		l = -1;
+		for (int i = 0; i < prefix; i++) printf(">   ");
+		printf("nb file end = %d\n", prc->prog[k].nb_file_end);
+		if (prc->prog[k].nb_file_end > 0)
+			while (prc->prog[k].file_end[++l])
+			{
+				for (int i = 0; i < prefix; i++) printf(">   ");
+				printf("file_end[%d] = %s\n", l, prc->prog[k].file_end[l]);
+			}
+	}
+}
+
+static void print_minishell_grp(t_group *grp, int prefix)
+{
+	static char *grps[] = { "AND", "OR", "PAR", "PROC" };
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("!!!! GROUP TYPE : %s\n", grps[grp->type]);
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("!!-> left : %p\n", grp->left);
+	if (grp->left) print_minishell_grp(grp->left, prefix + 1);
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("!!-> right : %p\n", grp->right);
+	if (grp->right) print_minishell_grp(grp->right, prefix + 1);
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("!!-> proc : %p\n", grp->proc);
+	if (grp->proc) print_minishell_proc(grp->proc, prefix);
+	for (int i = 0; i < prefix; i++) printf(">   ");
+	printf("!!!! END GROUP TYPE : %s\n\n", grps[grp->type]);
+}
+
 static void	print_minishell(t_minishell *mn)				/////////////////////////////////////////////////
 {
-	int		i = 0;
-	int		j = -1;
-	int		k = -1;
-	int		l = -1;
 	printf("/n////////////////////////// line_cut ///////////////////////////\n");
 	printf("[%d] : %s\n", mn->i_l, mn->line_cut[mn->i_l]);
-	// while (&mn->grp[++i])
-	// {
-		printf("\n---------------grp[%d]--------------\n", i);
-		j = 0;
-		// while (&mn->grp[i].proc[++j])
-		// {
-			printf("\n-------prc[%d]-------\n", j);
-			printf("%s\n", mn->grp[i].proc[j].prc);
-			k = -1;
-			printf("nb_prog = %d\n\n", mn->grp[i].proc[j].nb_prog);
-			while (++k < (int)mn->grp[i].proc[j].nb_prog)
-			{
-				printf("\n---prog[%d]---\n", k);
-				l = -1;
-				while (mn->grp[i].proc[j].prog[k].cmd[++l])
-				{
-					printf("arg[%d] = %s\n", l, mn->grp[i].proc[j].prog[k].cmd[l]);
-				}
-				printf("nb file in = %d\n", mn->grp[i].proc[j].prog[k].nb_file_in);
-				l = -1;
-				if (mn->grp[i].proc[j].prog[k].nb_file_in > 0)
-					while (mn->grp[i].proc[j].prog[k].file_in[++l])
-					{
-						printf("file_in[%d] = %s\n", l, mn->grp[i].proc[j].prog[k].file_in[l]);
-					}
-				l = -1;
-				printf("nb file out = %d\n", mn->grp[i].proc[j].prog[k].nb_file_out);
-				if (mn->grp[i].proc[j].prog[k].nb_file_out > 0)
-					while (mn->grp[i].proc[j].prog[k].file_out[++l])
-					{
-						printf("file_out[%d] = %s\n", l, mn->grp[i].proc[j].prog[k].file_out[l]);
-					}
-				l = -1;
-				printf("nb file end = %d\n", mn->grp[i].proc[j].prog[k].nb_file_end);
-				if (mn->grp[i].proc[j].prog[k].nb_file_end > 0)
-					while (mn->grp[i].proc[j].prog[k].file_end[++l])
-					{
-						printf("file_end[%d] = %s\n", l, mn->grp[i].proc[j].prog[k].file_end[l]);
-					}
-			// }
-		// }
-	}
+
+	print_minishell_grp(mn->grp, 0);
 }
 
 static int	check_quote(char *line)
@@ -123,8 +146,8 @@ int		main(void)
 	int			ret;
 
 	mn = (t_minishell) { 0 };
-	ft_bzero(&l, sizeof(t_line));
-	l.line = (char**)malloc(sizeof(char*) * 100);
+	l = (t_line) { 0 };
+	l.line = (char**)ft_memalloc(sizeof(char*) * 100);
 	while (1)
 	{
 		if (l.line[l.i])
